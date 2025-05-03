@@ -103,3 +103,9 @@ yarn add @nestjs/config class-validator class-transformer
 
 yarn add @nestjs/jwt @nestjs/passport passport passport-jwt passport-google-oa
 uth20 cookie-parser argon2 dayjs fs-extra @nestjs/serve-static app-root-path @prisma/client
+
+Yandex and payment API:
+yarn add passport-yandex @a2seven/yoo-checkout
+
+Typizations:
+yarn add -D @types/multer @types/fs-extra @types/passport-jwt @types/passport-google-oauth20 @types/cookie-parser
