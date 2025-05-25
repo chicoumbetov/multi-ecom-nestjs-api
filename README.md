@@ -87,12 +87,6 @@ Check out a few resources that may come in handy when working with NestJS:
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
@@ -109,3 +103,14 @@ yarn add passport-yandex @a2seven/yoo-checkout
 
 Typizations:
 yarn add -D @types/multer @types/fs-extra @types/passport-jwt @types/passport-google-oauth20 @types/cookie-parser
+
+ALTER USER postgres WITH PASSWORD 'your_new_password';
+
+##
+
+Instal depedencies above
+Connect postgress thourhg beekeeper or pgAdmin
+
+Define tables in schema.prisma
+run `prisma db push`
+run `prisma generate` in order to make prisma generate types
