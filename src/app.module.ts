@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common'
 
-import { ConfigModule } from '@nestjs/config'
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module'
+import { JwtStrategy } from './auth/strategies/jwt.strategy'
+import { AppConfigModule } from './config/config.module'
+import { UserModule } from './user/user.module'
 
 @Module({
-	imports: [ConfigModule.forRoot(), AuthModule, UserModule]
+	imports: [AppConfigModule, AuthModule, UserModule],
+	providers: [JwtStrategy]
 })
 export class AppModule {}

@@ -131,3 +131,16 @@ Generate user instances
 `nest generate res user --no-spec`
 
 Configurate jwt in jwt.config.ts
+
+Ensure that TS sees variables in env:
+npm install joi
+use Joi in src/config/config.module.ts
+
+create AuthDto
+Use AuthDto in User service to create 4 functions - create, getById, getByEmail, toggleFavorite
+
+Create 3 strategies of authentication:
+
+1. JWT - auth/strategies/jwt.strategy.ts
+2. Google - auth/strategies/google
+3. Yandex - auth/strategies/yandex
