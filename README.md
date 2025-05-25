@@ -129,3 +129,5 @@ Select "REST API"
 
 Generate user instances
 `nest generate res user --no-spec`
+
+Configurate jwt in jwt.config.ts
