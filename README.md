@@ -144,3 +144,5 @@ Create 3 strategies of authentication:
 1. JWT - auth/strategies/jwt.strategy.ts
 2. Google - auth/strategies/google
 3. Yandex - auth/strategies/yandex
+
+or any other on passport.js
