@@ -114,3 +114,10 @@ Connect postgress thourhg beekeeper or pgAdmin
 Define tables in schema.prisma
 run `prisma db push`
 run `prisma generate` in order to make prisma generate types
+
+Check db with created tables defined in schema.
+
+add prisma.service.ts from documentation
+
+use cookieParser, enableCors in main.ts
+enable env vars in app.module.ts through ConfigModule
