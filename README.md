@@ -122,7 +122,10 @@ add prisma.service.ts from documentation
 use cookieParser, enableCors in main.ts
 enable env vars in app.module.ts through ConfigModule
 
-Generate instances and authorization
+Generate authorization instances
 `nest generate res auth --no-spec`
 Select "REST API"
 "no" to generate CRUD entry points
+
+Generate user instances
+`nest generate res user --no-spec`
