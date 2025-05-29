@@ -146,3 +146,6 @@ Create 3 strategies of authentication:
 3. Yandex - auth/strategies/yandex
 
 or any other on passport.js
+
+Swagger UI:
+http://localhost:5001/api
