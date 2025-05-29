@@ -10,8 +10,10 @@ import * as Joi from 'joi'
 				GOOGLE_CLIENT_ID: Joi.string().required(),
 				GOOGLE_CLIENT_SECRET: Joi.string().required(),
 				SERVER_URL: Joi.string().required().uri()
-			})
+			}),
+			isGlobal: true
 		})
-	]
+	],
+	exports: [ConfigModule]
 })
 export class AppConfigModule {}
