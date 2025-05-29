@@ -147,5 +147,18 @@ Create 3 strategies of authentication:
 
 or any other on passport.js
 
-Swagger UI:
+# Swagger UI:
+
 http://localhost:5001/api
+
+https://docs.nestjs.com/deployment
+
+# Docker build image container:
+
+docker build -t multi-ecom-nestjs-api .
+
+# Run docker with command:
+
+docker-compose up --build
+or
+docker run -p 5001:5001 multi-ecom-nestjs-api
