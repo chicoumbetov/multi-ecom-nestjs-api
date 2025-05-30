@@ -1,4 +1,7 @@
-const allowedOrigins = [process.env.CLIENT_URL]
+const allowedOrigins = [
+	process.env.CLIENT_URL,
+	'' // for Postman test
+]
 
 const corsOptions = {
 	credentials: true,
