@@ -1,34 +1,55 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ColorService } from './color.service';
-import { CreateColorDto } from './dto/create-color.dto';
-import { UpdateColorDto } from './dto/update-color.dto';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	HttpCode,
+	Param,
+	Post,
+	Put,
+	UsePipes,
+	ValidationPipe
+} from '@nestjs/common'
+import { Auth } from 'src/auth/decorators/auth.decorator'
+import { ColorService } from './color.service'
+import { ColorDto } from './dto/color.dto'
 
-@Controller('color')
+@Controller('colors')
 export class ColorController {
-  constructor(private readonly colorService: ColorService) {}
+	constructor(private readonly colorService: ColorService) {}
 
-  @Post()
-  create(@Body() createColorDto: CreateColorDto) {
-    return this.colorService.create(createColorDto);
-  }
+	@Auth()
+	@Get('by-storeId/:storeId')
+	async getByStoreId(@Param('storeId') storeId: string) {
+		return this.colorService.getByStoreId(storeId)
+	}
 
-  @Get()
-  findAll() {
-    return this.colorService.findAll();
-  }
+	@Auth()
+	@Get('by-id/:id')
+	async getById(@Param('id') id: string) {
+		return this.colorService.getById(id)
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.colorService.findOne(+id);
-  }
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Post(':storeId')
+	async create(@Param('storeId') storeId: string, @Body() dto: ColorDto) {
+		return this.colorService.create(storeId, dto)
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateColorDto: UpdateColorDto) {
-    return this.colorService.update(+id, updateColorDto);
-  }
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Put(':id')
+	async update(@Param('id') id: string, @Body() dto: ColorDto) {
+		return this.colorService.update(id, dto)
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.colorService.remove(+id);
-  }
+	@HttpCode(200)
+	@Auth()
+	@Delete(':id')
+	async delete(@Param('id') id: string) {
+		return this.colorService.delete(id)
+	}
 }
