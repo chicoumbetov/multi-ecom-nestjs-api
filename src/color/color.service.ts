@@ -1,26 +1,63 @@
-import { Injectable } from '@nestjs/common';
-import { CreateColorDto } from './dto/create-color.dto';
-import { UpdateColorDto } from './dto/update-color.dto';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { PrismaService } from 'src/prisma.service'
+import { ColorDto } from './dto/color.dto'
 
 @Injectable()
 export class ColorService {
-  create(createColorDto: CreateColorDto) {
-    return 'This action adds a new color';
-  }
+	constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all color`;
-  }
+	async getByStoreId(storeId: string) {
+		return this.prisma.color.findMany({
+			where: {
+				storeId
+			}
+		})
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} color`;
-  }
+	async getById(id: string) {
+		const color = await this.prisma.color.findUnique({
+			where: {
+				id
+			}
+		})
 
-  update(id: number, updateColorDto: UpdateColorDto) {
-    return `This action updates a #${id} color`;
-  }
+		if (!color) throw new NotFoundException('color-not-found')
 
-  remove(id: number) {
-    return `This action removes a #${id} color`;
-  }
+		return color
+	}
+
+	async create(storeId: string, dto: ColorDto) {
+		return this.prisma.color.create({
+			data: {
+				name: dto.name,
+				value: dto.value,
+				storeId
+			}
+		})
+	}
+
+	async update(id: string, dto: ColorDto) {
+		await this.getById(id)
+
+		return this.prisma.color.update({
+			where: { id },
+			data: dto
+		})
+	}
+
+	async delete(id: string) {
+		await this.getById(id)
+
+		return this.prisma.color.delete({
+			where: { id }
+		})
+	}
+
+	findAll() {
+		return `This action returns all color`
+	}
+
+	findOne(id: number) {
+		return `This action returns a #${id} color`
+	}
 }
