@@ -1,34 +1,76 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	HttpCode,
+	Param,
+	Post,
+	Put,
+	Query,
+	UsePipes,
+	ValidationPipe
+} from '@nestjs/common'
+import { Auth } from 'src/auth/decorators/auth.decorator'
 
-@Controller('product')
+import { ProductDto } from './dto/product.dto'
+import { ProductService } from './product.service'
+
+@Controller('products')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+	constructor(private readonly productService: ProductService) {}
 
-  @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
-  }
+	@Get()
+	async getAll(@Query('searchTerm') searchTerm?: string) {
+		return this.productService.getAll(searchTerm)
+	}
 
-  @Get()
-  findAll() {
-    return this.productService.findAll();
-  }
+	@Auth()
+	@Get('by-storeId/:storeId')
+	async getByStoreId(@Param('storeId') storeId: string) {
+		return this.productService.getByStoreId(storeId)
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
-  }
+	@Get('by-id/:id')
+	async getById(@Param('id') id: string) {
+		return this.productService.getById(id)
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
-  }
+	@Get('by-category/:categoryId')
+	async getbyCategory(@Param('categoryId') categoryId: string) {
+		return this.productService.getByCategory(categoryId)
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
-  }
+	@Get('most-popular')
+	async getMostPopular() {
+		return this.productService.getMostPopular()
+	}
+
+	@Get('similar/:id')
+	async getSimilar(@Param('id') id: string) {
+		return this.productService.getSimilar(id)
+	}
+
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Post(':storeId')
+	async create(@Param('storeId') storeId: string, @Body() dto: ProductDto) {
+		return this.productService.create(storeId, dto)
+	}
+
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Put(':id')
+	async update(@Param('id') id: string, @Body() dto: ProductDto) {
+		return this.productService.update(id, dto)
+	}
+
+	@HttpCode(200)
+	@Auth()
+	@Delete(':id')
+	async delete(@Param('id') id: string) {
+		return this.productService.delete(id)
+	}
 }
