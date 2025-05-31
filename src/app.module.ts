@@ -9,9 +9,10 @@ import { ColorModule } from './color/color.module';
 import { ReviewModule } from './review/review.module';
 import { CategoryModule } from './category/category.module';
 import { FileModule } from './file/file.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
-	imports: [AppConfigModule, AuthModule, UserModule, StoreModule, ColorModule, ReviewModule, CategoryModule, FileModule],
+	imports: [AppConfigModule, AuthModule, UserModule, StoreModule, ColorModule, ReviewModule, CategoryModule, FileModule, ProductModule],
 	providers: [JwtStrategy]
 })
 export class AppModule {}
