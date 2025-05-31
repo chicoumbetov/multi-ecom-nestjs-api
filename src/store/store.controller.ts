@@ -1,34 +1,74 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { StoreService } from './store.service';
-import { CreateStoreDto } from './dto/create-store.dto';
-import { UpdateStoreDto } from './dto/update-store.dto';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	HttpCode,
+	Param,
+	Post,
+	Put,
+	UsePipes,
+	ValidationPipe
+} from '@nestjs/common'
+import { Auth } from 'src/auth/decorators/auth.decorator'
+import { CurrentUser } from 'src/user/decorators/user.decorator'
+import { CreateStoreDto } from './dto/create-store.dto'
+import { UpdateStoreDto } from './dto/update-store.dto'
+import { StoreService } from './store.service'
 
-@Controller('store')
+@Controller('stores')
 export class StoreController {
-  constructor(private readonly storeService: StoreService) {}
+	constructor(private readonly storeService: StoreService) {}
 
-  @Post()
-  create(@Body() createStoreDto: CreateStoreDto) {
-    return this.storeService.create(createStoreDto);
-  }
+	@Auth()
+	@Get('by-id/:id')
+	async getById(
+		@Param('id') storeId: string,
+		@CurrentUser('id') userId: string
+	) {
+		return this.storeService.getById(storeId, userId)
+	}
 
-  @Get()
-  findAll() {
-    return this.storeService.findAll();
-  }
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Post()
+	async create(
+		@CurrentUser('id') userId: string,
+		@Body() dto: CreateStoreDto
+	) {
+		return this.storeService.create(userId, dto)
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.storeService.findOne(+id);
-  }
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Put(':id')
+	async update(
+		@Param('id') storeId: string,
+		@CurrentUser('id') userId: string,
+		@Body() dto: UpdateStoreDto
+	) {
+		return this.storeService.update(storeId, userId, dto)
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
-    return this.storeService.update(+id, updateStoreDto);
-  }
+	@HttpCode(200)
+	@Auth()
+	@Delete(':id')
+	async delete(
+		@Param('id') storeId: string,
+		@CurrentUser('id') userId: string
+	) {
+		return this.storeService.delete(storeId, userId)
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.storeService.remove(+id);
-  }
+	@Get()
+	findAll() {
+		return this.storeService.findAll()
+	}
+
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.storeService.findOne(+id)
+	}
 }
