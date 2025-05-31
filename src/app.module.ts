@@ -5,9 +5,10 @@ import { JwtStrategy } from './auth/strategies/jwt.strategy'
 import { AppConfigModule } from './config/config.module'
 import { UserModule } from './user/user.module'
 import { StoreModule } from './store/store.module';
+import { ColorModule } from './color/color.module';
 
 @Module({
-	imports: [AppConfigModule, AuthModule, UserModule, StoreModule],
+	imports: [AppConfigModule, AuthModule, UserModule, StoreModule, ColorModule],
 	providers: [JwtStrategy]
 })
 export class AppModule {}
