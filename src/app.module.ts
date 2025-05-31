@@ -6,9 +6,10 @@ import { AppConfigModule } from './config/config.module'
 import { UserModule } from './user/user.module'
 import { StoreModule } from './store/store.module';
 import { ColorModule } from './color/color.module';
+import { ReviewModule } from './review/review.module';
 
 @Module({
-	imports: [AppConfigModule, AuthModule, UserModule, StoreModule, ColorModule],
+	imports: [AppConfigModule, AuthModule, UserModule, StoreModule, ColorModule, ReviewModule],
 	providers: [JwtStrategy]
 })
 export class AppModule {}
