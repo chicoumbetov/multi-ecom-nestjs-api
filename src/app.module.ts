@@ -7,9 +7,10 @@ import { UserModule } from './user/user.module'
 import { StoreModule } from './store/store.module';
 import { ColorModule } from './color/color.module';
 import { ReviewModule } from './review/review.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
-	imports: [AppConfigModule, AuthModule, UserModule, StoreModule, ColorModule, ReviewModule],
+	imports: [AppConfigModule, AuthModule, UserModule, StoreModule, ColorModule, ReviewModule, CategoryModule],
 	providers: [JwtStrategy]
 })
 export class AppModule {}
