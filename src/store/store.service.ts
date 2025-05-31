@@ -50,8 +50,13 @@ export class StoreService {
 		})
 	}
 
-	findAll() {
-		return `This action returns all store`
+	async findAll(userId: string) {
+		const stores = await this.prisma.store.findMany({
+			where: {
+				userId
+			}
+		})
+		return stores ?? []
 	}
 
 	findOne(id: number) {
