@@ -162,3 +162,12 @@ docker build -t multi-ecom-nestjs-api .
 docker-compose up --build
 or
 docker run -p 5001:5001 multi-ecom-nestjs-api
+
+Generating instances:
+nest g res color --no-spec
+nest g res category --no-spec
+nest g res file --no-spec
+nest g res store --no-spec
+nest g res order --no-spec
+nest g res statistics --no-spec
+nest g res product --no-spec
