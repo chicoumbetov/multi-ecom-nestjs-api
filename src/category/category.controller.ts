@@ -1,34 +1,64 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CategoryService } from './category.service';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	HttpCode,
+	Param,
+	Post,
+	Put,
+	UsePipes,
+	ValidationPipe
+} from '@nestjs/common'
+import { Auth } from 'src/auth/decorators/auth.decorator'
+import { CategoryService } from './category.service'
+import { CategoryDto } from './dto/category.dto'
 
-@Controller('category')
+@Controller('categories')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+	constructor(private readonly categoryService: CategoryService) {}
 
-  @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.create(createCategoryDto);
-  }
+	@Auth()
+	@Get('by-storeId/:storeId')
+	async getByStoreId(@Param('storeId') storeId: string) {
+		return this.categoryService.getByStoreId(storeId)
+	}
 
-  @Get()
-  findAll() {
-    return this.categoryService.findAll();
-  }
+	@Get('by-id/:id')
+	async getById(@Param('id') id: string) {
+		return this.categoryService.getById(id)
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(+id);
-  }
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Post(':storeId')
+	async create(@Param('storeId') storeId: string, @Body() dto: CategoryDto) {
+		return this.categoryService.create(storeId, dto)
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
-    return this.categoryService.update(+id, updateCategoryDto);
-  }
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Put(':id')
+	async update(@Param('id') id: string, @Body() dto: CategoryDto) {
+		return this.categoryService.update(id, dto)
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.categoryService.remove(+id);
-  }
+	@HttpCode(200)
+	@Auth()
+	@Delete(':id')
+	async delete(@Param('id') id: string) {
+		return this.categoryService.delete(id)
+	}
+
+	@Get()
+	findAll() {
+		return this.categoryService.findAll()
+	}
+
+	@Get(':id')
+	findOne(@Param('id') id: string) {
+		return this.categoryService.findOne(+id)
+	}
 }
