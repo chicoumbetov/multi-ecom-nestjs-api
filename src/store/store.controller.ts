@@ -62,9 +62,11 @@ export class StoreController {
 		return this.storeService.delete(storeId, userId)
 	}
 
+	@HttpCode(200)
+	@Auth()
 	@Get()
-	findAll() {
-		return this.storeService.findAll()
+	async findAll(@CurrentUser('id') userId: string) {
+		return this.storeService.findAll(userId)
 	}
 
 	@Get(':id')
