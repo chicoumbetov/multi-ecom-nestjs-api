@@ -12,6 +12,7 @@ import { UserModule } from './user/user.module'
 
 import { OrderModule } from './order/order.module'
 import { ProductModule } from './product/product.module'
+import { StatisticsModule } from './statistics/statistics.module';
 
 @Module({
 	imports: [
@@ -24,7 +25,8 @@ import { ProductModule } from './product/product.module'
 		CategoryModule,
 		FileModule,
 		ProductModule,
-		OrderModule
+		OrderModule,
+		StatisticsModule
 	],
 	providers: [JwtStrategy]
 })
