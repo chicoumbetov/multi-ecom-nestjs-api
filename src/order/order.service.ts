@@ -1,26 +1,100 @@
-import { Injectable } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { ICapturePayment, YooCheckout } from '@a2seven/yoo-checkout'
+import { Injectable } from '@nestjs/common'
+
+import { EnumOrderStatus } from 'generated/prisma'
+import { PrismaService } from 'src/prisma.service'
+import { OrderDto } from './dto/order.dto'
+import { PaymentStatusDto } from './dto/payment-status.dto'
+
+const checkout = new YooCheckout({
+	shopId: process.env['YOOKASSA_SHOP_ID']!,
+	secretKey: process.env['YOOKASSA_SECRET_KEY']!
+})
 
 @Injectable()
 export class OrderService {
-  create(createOrderDto: CreateOrderDto) {
-    return 'This action adds a new order';
-  }
+	constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return `This action returns all order`;
-  }
+	async createPayment(dto: OrderDto, userId: string) {
+		const orderItems = dto.items.map(item => ({
+			quantity: item.quantity,
+			price: item.price,
+			product: {
+				connect: {
+					id: item.productId
+				}
+			},
+			store: {
+				connect: {
+					id: item.storeId
+				}
+			}
+		}))
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
-  }
+		const total = dto.items.reduce((acc, item) => {
+			return acc + item.price * item.quantity
+		}, 0)
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
-  }
+		const order = await this.prisma.order.create({
+			data: {
+				status: dto.status,
+				items: {
+					create: orderItems
+				},
+				total,
+				user: {
+					connect: {
+						id: userId
+					}
+				}
+			}
+		})
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
-  }
+		const payment = await checkout.createPayment({
+			amount: {
+				value: total.toFixed(2),
+				currency: 'EUR'
+			},
+			payment_method_data: {
+				type: 'bank_card'
+			},
+			confirmation: {
+				type: 'redirect',
+				return_url: `${process.env.CLIENT_URL}/thanks`
+			},
+			description: `Order payment at TeaShop. Id of payment: #${order.id}`
+		})
+
+		return payment
+	}
+
+	async updateStatus(dto: PaymentStatusDto) {
+		if (dto.event === 'payment.waiting_for_capture') {
+			const capturePayment: ICapturePayment = {
+				amount: {
+					value: dto.object.amount.value,
+					currency: dto.object.amount.currency
+				}
+			}
+
+			return checkout.capturePayment(dto.object.id, capturePayment)
+		}
+
+		if (dto.event === 'payment.succeeded') {
+			const orderId = dto.object.description.split('#')[1]
+
+			await this.prisma.order.update({
+				where: {
+					id: orderId
+				},
+				data: {
+					status: EnumOrderStatus.PAYED
+				}
+			})
+
+			return true
+		}
+
+		return true
+	}
 }

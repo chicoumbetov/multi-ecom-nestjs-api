@@ -172,6 +172,8 @@ nest g res review --no-spec
 nest g res category --no-spec
 
 nest g res file --no-spec
+
+nest g res product --no-spec
+
 nest g res order --no-spec
 nest g res statistics --no-spec
-nest g res product --no-spec
