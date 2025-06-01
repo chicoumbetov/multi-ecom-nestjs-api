@@ -53,7 +53,7 @@ export class OrderService {
 		const payment = await checkout.createPayment({
 			amount: {
 				value: total.toFixed(2),
-				currency: 'EUR'
+				currency: 'RUB'
 			},
 			payment_method_data: {
 				type: 'bank_card'
