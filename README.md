@@ -177,3 +177,18 @@ nest g res product --no-spec
 
 nest g res order --no-spec
 nest g res statistics --no-spec
+
+https://yookassa.ru/developers/payment-acceptance/testing-and-going-live/testing?lang=en#test-bank-card
+test payments:
+Number Type of card 3-D Secure
+5555555555554477 Mastercard ✔️
+5555555555554444 Mastercard ➖
+6759649826438453 Maestro ➖
+4793128161644804 Visa ✔️
+4111111111111111 Visa ➖
+4175001000000017 Visa Electron ➖
+2200000000000004 Mir ✔️
+2202474301322987 Mir ➖
+370000000000002 American Express ➖
+3528000700000000 JCB ➖
+36700102000000 Diners Club
