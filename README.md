@@ -112,6 +112,7 @@ Here's a brief overview of some key endpoint categories:
 
 The project follows a modular and feature-driven structure:
 
+```
 src/
 ├── auth/ # Authentication and Authorization module
 │ ├── decorators/ # Custom decorators (e.g., @Auth())
@@ -140,6 +141,7 @@ src/
 └── main.ts # Application entry point
 ├── ...
 └── schema.prisma # Prisma database schema definition
+```
 
 ## Getting Started
 
