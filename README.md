@@ -1,91 +1,223 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+Multi-Ecom NestJS API
+This repository hosts the robust backend API for a full-featured multi-shop e-commerce platform. Built with NestJS, Prisma, and PostgreSQL, this API provides a scalable and secure foundation for managing multiple independent online stores, products, orders, users, and content.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+The frontend application, built with Next.js, is currently in development and deployed here.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Table of Contents
+Key Features & Concepts
+Technologies Used
+API Endpoints
+Project Structure
+Getting Started
+Prerequisites
+Installation
+Running the Application
+Deployment
+Contributing
+License
+Key Features & Concepts
+This backend project demonstrates a strong understanding and practical application of modern backend development principles, specifically addressing the needs of a multi-shop e-commerce system.
 
-## Description
+Modular & Scalable Architecture (NestJS):
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Organized into distinct, decoupled modules (Auth, User, Store, Product, Order, Category, Review, File, Statistics), promoting maintainability and scalability.
+Leverages NestJS's dependency injection system for clean, testable code.
+Robust Data Modeling with Prisma ORM:
 
-## Project setup
+Utilizes Prisma as a powerful, type-safe ORM for interacting with the PostgreSQL database.
+The schema.prisma defines a comprehensive data model for User, Store, Product, Category, Color, Review, Order, and OrderItem entities, showcasing effective relational database design.
+Clear one-to-many and many-to-many relationships (User to Store, Store to Product, Product to Category, Order to OrderItem, etc.).
+Advanced Authentication & Authorization:
 
-```bash
-$ yarn install
-```
+JWT-based Authentication: Securely issues and validates JSON Web Tokens for API access.
+OAuth 2.0 Integration: Seamless user authentication via Google and Yandex, demonstrating third-party service integration using Passport.js strategies.
+Refresh Token Mechanism: Implemented for enhanced security and improved user experience, providing a method to obtain new access tokens without repeated logins.
+Authorization Guards: Protected routes using custom @Auth() decorators and JwtAuthGuard to ensure only authenticated users can access sensitive endpoints.
+Clear Separation of Concerns (Controllers, Services, DTOs):
 
-## Compile and run the project
+Controllers: Handle incoming HTTP requests, route them to appropriate services, and manage responses (e.g., ProductController for product-related operations).
+Services: Encapsulate all business logic and interact with the database via Prisma (e.g., ProductService for product creation, retrieval, update, and deletion logic).
+DTOs (Data Transfer Objects): Utilize class-validator for robust request payload validation (e.g., ProductDto for defining structure and validation rules for product creation/update requests), ensuring data integrity.
+Multi-Shop Functionality:
 
-```bash
-# development
-$ yarn run start
+The Store entity is central to the multi-shop architecture, allowing multiple independent e-commerce stores to operate within the same system.
+Products, categories, colors, reviews, and order items are all logically associated with specific stores, enabling true multi-tenancy.
+Comprehensive API Endpoints:
 
-# watch mode
-$ yarn run start:dev
+Provides a rich set of RESTful API endpoints for managing all aspects of the e-commerce platform, including product catalog, user management, store administration, order processing, reviews, and more.
+Examples: /products (search, filter), /products/by-storeId/:storeId, /auth/login, /auth/google, /orders.
+Environment Configuration:
 
-# production mode
-$ yarn run start:prod
-```
+Securely manages sensitive information like database connection strings, JWT secrets, and OAuth credentials using environment variables and NestJS's @nestjs/config module.
+Error Handling:
 
-## Run tests
+Implements centralized error handling with specific exceptions (NotFoundException, BadRequestException, UnauthorizedException) to provide clear and informative API responses.
+Technologies Used
+Backend Framework: NestJS
+Database: PostgreSQL
+ORM: Prisma
+Authentication: Passport.js (JWT, Google OAuth2, Yandex OAuth2)
+Hashing: Argon2
+Validation: Class Validator
+Environment Management: @nestjs/config
+Deployment: Render
+Other Libraries: cookie-parser, dayjs, fs-extra
+API Endpoints
+The API is deployed at: https://multi-ecom-nestjs-api.onrender.com/api
 
-```bash
-# unit tests
-$ yarn run test
+Here's a brief overview of some key endpoint categories:
 
-# e2e tests
-$ yarn run test:e2e
+Authentication (/auth):
+POST /auth/login: User login with email and password.
+POST /auth/register: User registration with email and password.
+POST /auth/login/access-token: Obtain new access token using refresh token.
+POST /auth/logout: Invalidate session/refresh token.
+GET /auth/google: Initiate Google OAuth login.
+GET /auth/google/callback: Google OAuth callback endpoint.
+GET /auth/yandex: Initiate Yandex OAuth login.
+GET /auth/yandex/callback: Yandex OAuth callback endpoint.
+Products (/products):
+GET /products: Retrieve all products (with optional search term).
+GET /products/by-storeId/:storeId: Get products by store ID (authenticated).
+GET /products/by-id/:id: Get product by ID.
+GET /products/by-category/:categoryId: Get products by category.
+GET /products/most-popular: Get most popular products based on order items.
+GET /products/similar/:id: Get products similar to a given product.
+POST /products/:storeId: Create a new product for a specific store (authenticated).
+PUT /products/:id: Update an existing product (authenticated).
+DELETE /products/:id: Delete a product (authenticated).
+Users (/users): (Implicit from modules, likely /users or /profile)
+Stores (/stores): (Implicit from modules)
+Categories (/categories): (Implicit from modules)
+Orders (/orders): (Implicit from modules, likely handles Yookassa integration)
+Files (/files): (Implicit from modules, likely for image uploads)
+Reviews (/reviews): (Implicit from modules)
+Statistics (/statistics): (Implicit from modules)
+Project Structure
+The project follows a modular and feature-driven structure:
 
-# test coverage
-$ yarn run test:cov
-```
+src/
+├── auth/ # Authentication and Authorization module
+│ ├── decorators/ # Custom decorators (e.g., @Auth())
+│ ├── dto/ # DTOs for authentication (e.g., AuthDto)
+│ ├── guards/ # Guards for protecting routes (e.g., JwtAuthGuard)
+│ ├── strategies/ # Passport strategies (JWT, Google, Yandex)
+│ ├── auth.controller.ts
+│ ├── auth.module.ts
+│ └── auth.service.ts
+├── category/ # Category management module
+├── color/ # Color management module
+├── config/ # Application configuration (JWT, CORS, etc.)
+├── file/ # File upload and management module
+├── order/ # Order processing and Yookassa integration module
+├── product/ # Product management module
+│ ├── dto/ # DTOs for products (ProductDto)
+│ ├── product.controller.ts
+│ ├── product.module.ts
+│ └── product.service.ts
+├── review/ # Product review module
+├── store/ # Store management module
+├── user/ # User management module
+├── statistics/ # Data statistics module
+├── prisma.service.ts # Global Prisma client instance
+├── app.module.ts # Root module, imports all feature modules
+└── main.ts # Application entry point
+├── ...
+└── schema.prisma # Prisma database schema definition
+Getting Started
+Follow these instructions to set up and run the backend API locally.
 
-## Deployment
+Prerequisites
+Node.js (v18 or higher recommended)
+npm or Yarn
+PostgreSQL database
+Git
+Installation
+Clone the repository:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Bash
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+git clone https://github.com/YOUR_USERNAME/multi-ecom-nestjs-api.git
+cd multi-ecom-nestjs-api
+Install dependencies:
 
-```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
-```
+Bash
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+npm install
 
-## Resources
+# or
 
-Check out a few resources that may come in handy when working with NestJS:
+yarn install
+Set up environment variables:
+Create a .env file in the project root and populate it with your environment variables. Refer to .env.example (or the .env content from your previous message) for required variables.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Code snippet
 
-## Support
+# when local DB PostgreSQL used
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/multi-ecom-next-nest?schema=public"
+
+# INTERNAL_DB_URL="..." # For Render deployment
+
+# EXTERNAL_DB_URL="..." # For Render deployment
+
+CLIENT_URL=http://localhost:3000
+NODE_ENV=dev
+JWT_SECRET=YOUR_SUPER_SECRET_JWT_KEY
+
+GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
+
+YANDEX_CLIENT_ID=YOUR_YANDEX_CLIENT_ID
+YANDEX_CLIENT_SECRET=YOUR_YANDEX_CLIENT_SECRET
+
+YOOKASSA_SHOP_ID=YOUR_YOOKASSA_SHOP_ID
+YOOKASSA_SECRET_KEY=YOUR_YOOKASSA_SECRET_KEY
+
+SERVER_URL=http://localhost:5001 # Or your actual backend URL
+SERVER_DOMAIN=localhost # Or your actual backend domain
+Important: Replace placeholder values (YOUR_SUPER_SECRET_JWT_KEY, YOUR_GOOGLE_CLIENT_ID, etc.) with your actual credentials. For JWT_SECRET, generate a strong, random string.
+Ensure your DATABASE_URL points to your local PostgreSQL instance.
+Run Prisma migrations:
+Generate Prisma client and apply migrations to your database.
+
+Bash
+
+npx prisma generate
+npx prisma migrate dev --name init
+This will create the database tables defined in your schema.prisma.
+
+Running the Application
+Development mode (with hot-reloading):
+
+Bash
+
+npm run start:dev
+
+# or
+
+yarn start:dev
+The API will be available at http://localhost:5001/api (or the port defined in SERVER_URL in your .env).
+
+Production mode:
+
+Bash
+
+npm run build
+npm run start:prod
+
+# or
+
+yarn build
+yarn start:prod
+Deployment
+The backend API is deployed on Render and accessible at:
+https://multi-ecom-nestjs-api.onrender.com/api
+
+The deployment leverages environment variables for database connection (using EXTERNAL_DB_URL or INTERNAL_DB_URL for Render's internal database) and other sensitive configurations.
+
+Contributing
+Contributions are welcome! If you find a bug or want to suggest an enhancement, please open an issue or submit a pull request.
 
 ## License
 
