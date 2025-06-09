@@ -1,8 +1,10 @@
-# Multi-Ecom NestJS API
+# Multi-Ecom Node JS NestJS API
 
-This repository hosts the robust backend API for a full-featured multi-shop e-commerce platform. Built with **NestJS**, **Prisma**, and **PostgreSQL**, this API provides a scalable and secure foundation for managing multiple independent online stores, products, orders, users, and content.
+This repository hosts the robust backend API for a full-featured multi-shop e-commerce platform. Built with **NodeJS**, **NestJS**, **Prisma**, and **PostgreSQL**, this API provides a scalable and secure foundation for managing multiple independent online stores, products, orders, users, and content.
 
-The frontend application, built with Next.js, is currently in development and deployed [here](https://multi-ecom-nextjs-with-cms.netlify.app/).
+The frontend application, built with Next.js, is currently in development and deployed here:
+
+https://multi-ecom-nextjs-with-cms.netlify.app/
 
 ## Table of Contents
 
