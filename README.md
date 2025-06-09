@@ -1,99 +1,115 @@
-Multi-Ecom NestJS API
-This repository hosts the robust backend API for a full-featured multi-shop e-commerce platform. Built with NestJS, Prisma, and PostgreSQL, this API provides a scalable and secure foundation for managing multiple independent online stores, products, orders, users, and content.
+# Multi-Ecom NestJS API
 
-The frontend application, built with Next.js, is currently in development and deployed here.
+This repository hosts the robust backend API for a full-featured multi-shop e-commerce platform. Built with **NestJS**, **Prisma**, and **PostgreSQL**, this API provides a scalable and secure foundation for managing multiple independent online stores, products, orders, users, and content.
 
-Table of Contents
-Key Features & Concepts
-Technologies Used
-API Endpoints
-Project Structure
-Getting Started
-Prerequisites
-Installation
-Running the Application
-Deployment
-Contributing
-License
-Key Features & Concepts
+The frontend application, built with Next.js, is currently in development and deployed [here](https://multi-ecom-nextjs-with-cms.netlify.app/).
+
+## Table of Contents
+
+- [Key Features & Concepts](#key-features--concepts)
+- [Technologies Used](#technologies-used)
+- [API Endpoints](#api-endpoints)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Running the Application](#running-the-application)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Key Features & Concepts
+
 This backend project demonstrates a strong understanding and practical application of modern backend development principles, specifically addressing the needs of a multi-shop e-commerce system.
 
-Modular & Scalable Architecture (NestJS):
+- **Modular & Scalable Architecture (NestJS):**
 
-Organized into distinct, decoupled modules (Auth, User, Store, Product, Order, Category, Review, File, Statistics), promoting maintainability and scalability.
-Leverages NestJS's dependency injection system for clean, testable code.
-Robust Data Modeling with Prisma ORM:
+    - Organized into distinct, decoupled modules (`Auth`, `User`, `Store`, `Product`, `Order`, `Category`, `Review`, `File`, `Statistics`), promoting maintainability and scalability.
+    - Leverages NestJS's dependency injection system for clean, testable code.
 
-Utilizes Prisma as a powerful, type-safe ORM for interacting with the PostgreSQL database.
-The schema.prisma defines a comprehensive data model for User, Store, Product, Category, Color, Review, Order, and OrderItem entities, showcasing effective relational database design.
-Clear one-to-many and many-to-many relationships (User to Store, Store to Product, Product to Category, Order to OrderItem, etc.).
-Advanced Authentication & Authorization:
+- **Robust Data Modeling with Prisma ORM:**
 
-JWT-based Authentication: Securely issues and validates JSON Web Tokens for API access.
-OAuth 2.0 Integration: Seamless user authentication via Google and Yandex, demonstrating third-party service integration using Passport.js strategies.
-Refresh Token Mechanism: Implemented for enhanced security and improved user experience, providing a method to obtain new access tokens without repeated logins.
-Authorization Guards: Protected routes using custom @Auth() decorators and JwtAuthGuard to ensure only authenticated users can access sensitive endpoints.
-Clear Separation of Concerns (Controllers, Services, DTOs):
+    - Utilizes **Prisma** as a powerful, type-safe ORM for interacting with the **PostgreSQL** database.
+    - The `schema.prisma` defines a comprehensive data model for `User`, `Store`, `Product`, `Category`, `Color`, `Review`, `Order`, and `OrderItem` entities, showcasing effective relational database design.
+    - Clear one-to-many and many-to-many relationships (`User` to `Store`, `Store` to `Product`, `Product` to `Category`, `Order` to `OrderItem`, etc.).
 
-Controllers: Handle incoming HTTP requests, route them to appropriate services, and manage responses (e.g., ProductController for product-related operations).
-Services: Encapsulate all business logic and interact with the database via Prisma (e.g., ProductService for product creation, retrieval, update, and deletion logic).
-DTOs (Data Transfer Objects): Utilize class-validator for robust request payload validation (e.g., ProductDto for defining structure and validation rules for product creation/update requests), ensuring data integrity.
-Multi-Shop Functionality:
+- **Advanced Authentication & Authorization:**
 
-The Store entity is central to the multi-shop architecture, allowing multiple independent e-commerce stores to operate within the same system.
-Products, categories, colors, reviews, and order items are all logically associated with specific stores, enabling true multi-tenancy.
-Comprehensive API Endpoints:
+    - **JWT-based Authentication:** Securely issues and validates JSON Web Tokens for API access.
+    - **OAuth 2.0 Integration:** Seamless user authentication via **Google** and **Yandex**, demonstrating third-party service integration using Passport.js strategies.
+    - **Refresh Token Mechanism:** Implemented for enhanced security and improved user experience, providing a method to obtain new access tokens without repeated logins.
+    - **Authorization Guards:** Protected routes using custom `@Auth()` decorators and `JwtAuthGuard` to ensure only authenticated users can access sensitive endpoints.
 
-Provides a rich set of RESTful API endpoints for managing all aspects of the e-commerce platform, including product catalog, user management, store administration, order processing, reviews, and more.
-Examples: /products (search, filter), /products/by-storeId/:storeId, /auth/login, /auth/google, /orders.
-Environment Configuration:
+- **Clear Separation of Concerns (Controllers, Services, DTOs):**
 
-Securely manages sensitive information like database connection strings, JWT secrets, and OAuth credentials using environment variables and NestJS's @nestjs/config module.
-Error Handling:
+    - **Controllers:** Handle incoming HTTP requests, route them to appropriate services, and manage responses (e.g., `ProductController` for product-related operations).
+    - **Services:** Encapsulate all business logic and interact with the database via Prisma (e.g., `ProductService` for product creation, retrieval, update, and deletion logic).
+    - **DTOs (Data Transfer Objects):** Utilize `class-validator` for robust request payload validation (e.g., `ProductDto` for defining structure and validation rules for product creation/update requests), ensuring data integrity.
 
-Implements centralized error handling with specific exceptions (NotFoundException, BadRequestException, UnauthorizedException) to provide clear and informative API responses.
-Technologies Used
-Backend Framework: NestJS
-Database: PostgreSQL
-ORM: Prisma
-Authentication: Passport.js (JWT, Google OAuth2, Yandex OAuth2)
-Hashing: Argon2
-Validation: Class Validator
-Environment Management: @nestjs/config
-Deployment: Render
-Other Libraries: cookie-parser, dayjs, fs-extra
-API Endpoints
-The API is deployed at: https://multi-ecom-nestjs-api.onrender.com/api
+- **Multi-Shop Functionality:**
+
+    - The `Store` entity is central to the multi-shop architecture, allowing multiple independent e-commerce stores to operate within the same system.
+    - Products, categories, colors, reviews, and order items are all logically associated with specific stores, enabling true multi-tenancy.
+
+- **Comprehensive API Endpoints:**
+
+    - Provides a rich set of RESTful API endpoints for managing all aspects of the e-commerce platform, including product catalog, user management, store administration, order processing, reviews, and more.
+    - Examples: `/products` (search, filter), `/products/by-storeId/:storeId`, `/auth/login`, `/auth/google`, `/orders`.
+
+- **Environment Configuration:**
+
+    - Securely manages sensitive information like database connection strings, JWT secrets, and OAuth credentials using environment variables and NestJS's `@nestjs/config` module.
+
+- **Error Handling:**
+    - Implements centralized error handling with specific exceptions (`NotFoundException`, `BadRequestException`, `UnauthorizedException`) to provide clear and informative API responses.
+
+## Technologies Used
+
+- **Backend Framework:** [NestJS](https://nestjs.com/)
+- **Database:** [PostgreSQL](https://www.postgresql.org/)
+- **ORM:** [Prisma](https://www.prisma.io/)
+- **Authentication:** [Passport.js](https://www.passportjs.org/) (JWT, Google OAuth2, Yandex OAuth2)
+- **Hashing:** [Argon2](https://github.com/P-H-C/phc-argon2)
+- **Validation:** [Class Validator](https://github.com/typestack/class-validator)
+- **Environment Management:** `@nestjs/config`
+- **Deployment:** Render
+- **Other Libraries:** `cookie-parser`, `dayjs`, `fs-extra`
+
+## API Endpoints
+
+The API is deployed at: `https://multi-ecom-nestjs-api.onrender.com/api`
 
 Here's a brief overview of some key endpoint categories:
 
-Authentication (/auth):
-POST /auth/login: User login with email and password.
-POST /auth/register: User registration with email and password.
-POST /auth/login/access-token: Obtain new access token using refresh token.
-POST /auth/logout: Invalidate session/refresh token.
-GET /auth/google: Initiate Google OAuth login.
-GET /auth/google/callback: Google OAuth callback endpoint.
-GET /auth/yandex: Initiate Yandex OAuth login.
-GET /auth/yandex/callback: Yandex OAuth callback endpoint.
-Products (/products):
-GET /products: Retrieve all products (with optional search term).
-GET /products/by-storeId/:storeId: Get products by store ID (authenticated).
-GET /products/by-id/:id: Get product by ID.
-GET /products/by-category/:categoryId: Get products by category.
-GET /products/most-popular: Get most popular products based on order items.
-GET /products/similar/:id: Get products similar to a given product.
-POST /products/:storeId: Create a new product for a specific store (authenticated).
-PUT /products/:id: Update an existing product (authenticated).
-DELETE /products/:id: Delete a product (authenticated).
-Users (/users): (Implicit from modules, likely /users or /profile)
-Stores (/stores): (Implicit from modules)
-Categories (/categories): (Implicit from modules)
-Orders (/orders): (Implicit from modules, likely handles Yookassa integration)
-Files (/files): (Implicit from modules, likely for image uploads)
-Reviews (/reviews): (Implicit from modules)
-Statistics (/statistics): (Implicit from modules)
-Project Structure
+- **Authentication (`/auth`)**:
+    - `POST /auth/login`: User login with email and password.
+    - `POST /auth/register`: User registration with email and password.
+    - `POST /auth/login/access-token`: Obtain new access token using refresh token.
+    - `POST /auth/logout`: Invalidate session/refresh token.
+    - `GET /auth/google`: Initiate Google OAuth login.
+    - `GET /auth/google/callback`: Google OAuth callback endpoint.
+    - `GET /auth/yandex`: Initiate Yandex OAuth login.
+    - `GET /auth/yandex/callback`: Yandex OAuth callback endpoint.
+- **Products (`/products`)**:
+    - `GET /products`: Retrieve all products (with optional search term).
+    - `GET /products/by-storeId/:storeId`: Get products by store ID (authenticated).
+    - `GET /products/by-id/:id`: Get product by ID.
+    - `GET /products/by-category/:categoryId`: Get products by category.
+    - `GET /products/most-popular`: Get most popular products based on order items.
+    - `GET /products/similar/:id`: Get products similar to a given product.
+    - `POST /products/:storeId`: Create a new product for a specific store (authenticated).
+    - `PUT /products/:id`: Update an existing product (authenticated).
+    - `DELETE /products/:id`: Delete a product (authenticated).
+- **Users (`/users`)**: (Implicit from modules, likely `/users` or `/profile`)
+- **Stores (`/stores`)**: (Implicit from modules)
+- **Categories (`/categories`)**: (Implicit from modules)
+- **Orders (`/orders`)**: (Implicit from modules, likely handles Yookassa integration)
+- **Files (`/files`)**: (Implicit from modules, likely for image uploads)
+- **Reviews (`/reviews`)**: (Implicit from modules)
+- **Statistics (`/statistics`)**: (Implicit from modules)
+
+## Project Structure
+
 The project follows a modular and feature-driven structure:
 
 src/
@@ -124,99 +140,98 @@ src/
 └── main.ts # Application entry point
 ├── ...
 └── schema.prisma # Prisma database schema definition
-Getting Started
+
+## Getting Started
+
 Follow these instructions to set up and run the backend API locally.
 
-Prerequisites
-Node.js (v18 or higher recommended)
-npm or Yarn
-PostgreSQL database
-Git
-Installation
-Clone the repository:
+### Prerequisites
 
-Bash
+- Node.js (v18 or higher recommended)
+- npm or Yarn
+- PostgreSQL database
+- Git
 
-git clone https://github.com/YOUR_USERNAME/multi-ecom-nestjs-api.git
-cd multi-ecom-nestjs-api
-Install dependencies:
+### Installation
 
-Bash
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/YOUR_USERNAME/multi-ecom-nestjs-api.git](https://github.com/YOUR_USERNAME/multi-ecom-nestjs-api.git)
+    cd multi-ecom-nestjs-api
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+3.  **Set up environment variables:**
+    Create a `.env` file in the project root and populate it with your environment variables. Refer to `.env.example` (or the `.env` content from your previous message) for required variables.
 
-npm install
+    ```env
+    # when local DB PostgreSQL used
+    DATABASE_URL="postgresql://postgres:postgres@localhost:5432/multi-ecom-next-nest?schema=public"
+    # INTERNAL_DB_URL="..." # For Render deployment
+    # EXTERNAL_DB_URL="..." # For Render deployment
 
-# or
+    CLIENT_URL=http://localhost:3000
+    NODE_ENV=dev
+    JWT_SECRET=YOUR_SUPER_SECRET_JWT_KEY
 
-yarn install
-Set up environment variables:
-Create a .env file in the project root and populate it with your environment variables. Refer to .env.example (or the .env content from your previous message) for required variables.
+    GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
+    GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
 
-Code snippet
+    YANDEX_CLIENT_ID=YOUR_YANDEX_CLIENT_ID
+    YANDEX_CLIENT_SECRET=YOUR_YANDEX_CLIENT_SECRET
 
-# when local DB PostgreSQL used
+    YOOKASSA_SHOP_ID=YOUR_YOOKASSA_SHOP_ID
+    YOOKASSA_SECRET_KEY=YOUR_YOOKASSA_SECRET_KEY
 
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/multi-ecom-next-nest?schema=public"
+    SERVER_URL=http://localhost:5001 # Or your actual backend URL
+    SERVER_DOMAIN=localhost # Or your actual backend domain
+    ```
 
-# INTERNAL_DB_URL="..." # For Render deployment
+    - **Important:** Replace placeholder values (`YOUR_SUPER_SECRET_JWT_KEY`, `YOUR_GOOGLE_CLIENT_ID`, etc.) with your actual credentials. For `JWT_SECRET`, generate a strong, random string.
+    - Ensure your `DATABASE_URL` points to your local PostgreSQL instance.
 
-# EXTERNAL_DB_URL="..." # For Render deployment
+4.  **Run Prisma migrations:**
+    Generate Prisma client and apply migrations to your database.
+    ```bash
+    npx prisma generate
+    npx prisma migrate dev --name init
+    ```
+    This will create the database tables defined in your `schema.prisma`.
 
-CLIENT_URL=http://localhost:3000
-NODE_ENV=dev
-JWT_SECRET=YOUR_SUPER_SECRET_JWT_KEY
+## Running the Application
 
-GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
-GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
+- **Development mode (with hot-reloading):**
 
-YANDEX_CLIENT_ID=YOUR_YANDEX_CLIENT_ID
-YANDEX_CLIENT_SECRET=YOUR_YANDEX_CLIENT_SECRET
+    ```bash
+    npm run start:dev
+    # or
+    yarn start:dev
+    ```
 
-YOOKASSA_SHOP_ID=YOUR_YOOKASSA_SHOP_ID
-YOOKASSA_SECRET_KEY=YOUR_YOOKASSA_SECRET_KEY
+    The API will be available at `http://localhost:5001/api` (or the port defined in `SERVER_URL` in your `.env`).
 
-SERVER_URL=http://localhost:5001 # Or your actual backend URL
-SERVER_DOMAIN=localhost # Or your actual backend domain
-Important: Replace placeholder values (YOUR_SUPER_SECRET_JWT_KEY, YOUR_GOOGLE_CLIENT_ID, etc.) with your actual credentials. For JWT_SECRET, generate a strong, random string.
-Ensure your DATABASE_URL points to your local PostgreSQL instance.
-Run Prisma migrations:
-Generate Prisma client and apply migrations to your database.
+- **Production mode:**
+    ```bash
+    npm run build
+    npm run start:prod
+    # or
+    yarn build
+    yarn start:prod
+    ```
 
-Bash
+## Deployment
 
-npx prisma generate
-npx prisma migrate dev --name init
-This will create the database tables defined in your schema.prisma.
+The backend API is deployed on [Render](https://render.com/) and accessible at:
+`https://multi-ecom-nestjs-api.onrender.com/api`
 
-Running the Application
-Development mode (with hot-reloading):
+The deployment leverages environment variables for database connection (using `EXTERNAL_DB_URL` or `INTERNAL_DB_URL` for Render's internal database) and other sensitive configurations.
 
-Bash
+## Contributing
 
-npm run start:dev
-
-# or
-
-yarn start:dev
-The API will be available at http://localhost:5001/api (or the port defined in SERVER_URL in your .env).
-
-Production mode:
-
-Bash
-
-npm run build
-npm run start:prod
-
-# or
-
-yarn build
-yarn start:prod
-Deployment
-The backend API is deployed on Render and accessible at:
-https://multi-ecom-nestjs-api.onrender.com/api
-
-The deployment leverages environment variables for database connection (using EXTERNAL_DB_URL or INTERNAL_DB_URL for Render's internal database) and other sensitive configurations.
-
-Contributing
 Contributions are welcome! If you find a bug or want to suggest an enhancement, please open an issue or submit a pull request.
 
 ## License
