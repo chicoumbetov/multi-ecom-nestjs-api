@@ -124,8 +124,8 @@ export class AuthService {
 			httpOnly: true,
 			domain: this.configService.get('SERVER_DOMAIN'),
 			expires: new Date(0),
-			secure: process.env.NODE_ENV === 'production',
-			sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+			secure: process.env.NODE_ENV === 'prod',
+			sameSite: process.env.NODE_ENV === 'prod' ? 'none' : 'lax'
 		})
 	}
 }
