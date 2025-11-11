@@ -1,5 +1,6 @@
 const allowedOrigins = [
 	process.env.CLIENT_URL,
+	'https://multi-ecom-nextjs-with-cms-ubzi.vercel.app/',
 	'' // for Postman test
 ]
 
