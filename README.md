@@ -343,3 +343,55 @@ Number Type of card 3-D Secure
 370000000000002 American Express ➖
 3528000700000000 JCB ➖
 36700102000000 Diners Club
+
+
+# Reusing same supabase db for different projects:
+0. Swap temporarily DATABASE_URL to DIRECT_URL for migrations purposes. swap back at the end when new tables are created to existing tables of other projects.
+1. npx prisma db pull
+to get existing tables and overwrite existing schema.prisma:
+```
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["native", "darwin-arm64", "linux-arm64-openssl-3.0.x", "debian-openssl-3.0.x", "linux-musl"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model backgrounds {
+  id               Int      @id @default(autoincrement())
+  image            String
+  new_background   String?
+  review           String?
+  review_completed Boolean? @default(false)
+  theme            String?
+}
+
+model documents {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  filename       String    @db.VarChar(255)
+  mimetype       String    @db.VarChar(100)
+  storage_url    String
+  user_id        String    @db.VarChar(255)
+  status         String    @default("UPLOADED") @db.VarChar(50)
+  llm_prompt     String?
+  extracted_data Json?
+  error_details  String?
+  created_at     DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime? @default(now()) @db.Timestamptz(6)
+}
+```
+
+2. merge pulled schema and existing schema.prisma.
+schema.prisma will contain models of current project but also models from other projects.
+
+3. rm -rf node_modules, package-lock.json and dist folder.
+
+4. npx prisma generate
+creates "generated" folder.
+
+5. npx prisma db push
+adds new tables without affecting existing tables from other projects.
