@@ -1,7 +1,8 @@
 import { ICapturePayment, YooCheckout } from '@a2seven/yoo-checkout'
 import { Injectable } from '@nestjs/common'
 
-import { EnumOrderStatus } from 'generated/prisma'
+// import { EnumOrderStatus } from 'generated/prisma'
+import { EnumOrderStatus } from '@prisma/client'
 import { PrismaService } from 'src/prisma.service'
 import { OrderDto } from './dto/order.dto'
 import { PaymentStatusDto } from './dto/payment-status.dto'

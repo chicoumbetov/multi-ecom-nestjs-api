@@ -352,7 +352,7 @@ to get existing tables and overwrite existing schema.prisma:
 ```
 generator client {
   provider      = "prisma-client-js"
-  output        = "../generated/prisma"
+  // output        = "../generated/prisma" // without output, Prisma now defaults to node_modules/.prisma/client
   binaryTargets = ["native", "darwin-arm64", "linux-arm64-openssl-3.0.x", "debian-openssl-3.0.x", "linux-musl"]
 }
 

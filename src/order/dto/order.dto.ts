@@ -7,7 +7,8 @@ import {
 	IsString,
 	ValidateNested
 } from 'class-validator'
-import { EnumOrderStatus } from 'generated/prisma'
+// import { EnumOrderStatus } from 'generated/prisma'
+import { EnumOrderStatus } from '@prisma/client'
 
 export class OrderDto {
 	@IsOptional()
